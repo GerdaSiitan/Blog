@@ -28,6 +28,21 @@
         </div>
     </div>
 
+    <div class="card bg-base-200 shadow-xl min-h-full mb-2">
+        <div class="card-body ">
+            <form method="POST">
+                <label class="form-control w-full">
+                    <div class="label">
+                        <span class="label-text">Comment</span>
+                    </div>
+                    <textarea name="body" placeholder="jfsdjf" rows="4"></textarea>
+                    @class(['p-4', 'font-bold' => true])
+                </label>
+            </form>
+        </div>
+    </div>
+
+
     @foreach($post->comments as $comment)
         <div class="card bg-base-200 shadow-xl min-h-full mb-2">
             <div class="card-body ">

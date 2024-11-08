@@ -17,10 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PostSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(TagSeeder::class);
-<<<<<<< HEAD
         $this->call(LikeSeeder::class);
         $this->call(FollowsSeeder::class);
-=======
->>>>>>> 785228b813ef7b7d3ff89b064ec61810c576a0f2
     }
 }

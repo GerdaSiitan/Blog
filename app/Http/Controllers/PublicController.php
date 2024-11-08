@@ -11,11 +11,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PublicController extends Controller
 {
     public function index(){
-<<<<<<< HEAD
-        $posts = Post::withCount('comments', 'likes')->latest()->simplePaginate(16);
-=======
         $posts = Post::withCount('comments')->latest()->simplePaginate(16);
->>>>>>> 785228b813ef7b7d3ff89b064ec61810c576a0f2
         return view('welcome', compact('posts'));
     }
 
