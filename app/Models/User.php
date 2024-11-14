@@ -69,6 +69,19 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+
+    public function authHasFollowed(): Attribute {
+
+        return Attribute::get(function() {
+
+            if(!auth()->user()){
+                return false;
+            }
+            return auth()->user()->followees()->where('followee_id', $this->id)->exists();
+        });
+    }
+
+
     public function posts(){
         return $this->hasMany(Post::class);
     }
@@ -76,4 +89,26 @@ class User extends Authenticatable implements MustVerifyEmail
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
+
+    public function commentsOnPosts(){
+        return $this->hasManyThrough(Comment::class, Post::class);
+    }
+
+    public function likesOnPosts(){
+        return $this->hasManyThrough(Like::class, Post::class);
+    }
+
+    public function followers(){
+        return $this->belongsToMany(User::class, 'follows', 'followee_id', 'follower_id');
+    }
+
+    public function followees(){
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'followee_id');
+    }
+
+
 }

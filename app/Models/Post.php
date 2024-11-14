@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Post extends Model
 {
@@ -67,6 +69,16 @@ class Post extends Model
         });
     }
 
+    public function authHasLiked(): Attribute {
+        return Attribute::get(function() {
+            if(!auth()->user()){
+                return false;
+            }
+            return auth()->user()->likes()->where('post_id', $this->id)->exists();
+
+        });
+    }
+
     protected static function booted(): void {
         static::deleting(function ($post){
             Storage::disk('public')->delete($post->imageFile);
@@ -84,4 +96,13 @@ class Post extends Model
     public function tags(){
         return $this->belongsToMany(Tag::class);
     }
+
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
+
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
 }

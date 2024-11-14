@@ -31,8 +31,9 @@
                             @endif
                         </div>
 
-<<<<<<< HEAD
                         <p class="text-neutral-content"><a href="{{route('user', ['user' => $post->user])}}">{{ $post->user->name }}</a></p>
+                        <p class="text-neutral-content"><a href="{{route('category', ['category' => $post->category])}}">{{ $post->category->name }}</a></p>
+
                         <p class="text-neutral-content">Comments: {{ $post->comments_count }}</p>
                         <p class="text-neutral-content">Likes: {{ $post->likes_count }}</p>
                         <form action="{{ route('like', ['post' => $post]) }}" method="POST">
@@ -43,10 +44,6 @@
                                 <button class="btn btn-primary">Like</button>
                             @endif
                         </form>
-=======
-                        <p class="text-neutral-content">{{ $post->user->name }}</p>
-                        <p class="text-neutral-content">Comments: {{ $post->comments_count }}</p>
->>>>>>> 785228b813ef7b7d3ff89b064ec61810c576a0f2
                         <div class="flex flex-wrap gap-1">
                             @foreach ($post->tags as $tag)
                                 <div class="badge badge-primary badge-outline">{{$tag->name}}</div>

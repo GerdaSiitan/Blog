@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Like;
 use App\Models\Post;
 use App\Models\User;
@@ -11,7 +13,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class PublicController extends Controller
 {
     public function index(){
-        $posts = Post::withCount('comments')->latest()->simplePaginate(16);
+        $posts = Post::withCount('comments', 'likes')->latest()->simplePaginate(16);
         return view('welcome', compact('posts'));
     }
 
@@ -47,4 +49,17 @@ class PublicController extends Controller
         return redirect()->back();
      }
 
+    public function comment(Post $post, Request $request){
+        $comment = new Comment();
+        $comment->body = $request->input('body');
+        $comment->post()->associate($post);
+        $comment->user()->associate(auth()->user());
+        $comment->save();
+        return redirect()->back();
+    }
+
+    public function category(Category $category){
+        $posts = $category->posts()->withCount('comments', 'likes')->latest()->simplePaginate(16);
+        return view('welcome', compact('posts'));
+    }
 }
