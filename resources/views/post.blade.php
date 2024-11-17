@@ -70,5 +70,9 @@
             <p class="text-neutral-content">{{ $comment->user->name }}</p>
             </div>
         </div>
+        @foreach($post->tags as $tag)
+    <a href="{{ route('tag.show', $tag) }}" class="tag-link">#{{ $tag->name }}</a>
+@endforeach
+
     @endforeach
 @endsection
